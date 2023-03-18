@@ -9,9 +9,9 @@ The project is created with the help of the Flask framework along with some of i
 ## Getting Started
 To test the REST Api we can use different methods. My recommendation is Postman.
 
-1.Clone this repository: git clone https://github.com/PurceaIonut/hospital-management.git <br />
-2.Navigate to the project directory: cd <repository-name> <br />
-3.Install the required dependencies: pip install -r requirements.txt <br />
+1. Clone this repository: git clone https://github.com/PurceaIonut/hospital-management.git <br />
+2. Navigate to the project directory: cd <repository-name> <br />
+3. Install the required dependencies: pip install -r requirements.txt <br />
 
 
 ### Dependencies
