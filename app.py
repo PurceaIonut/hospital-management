@@ -54,7 +54,7 @@ class Treatment(db.Model):
 #Register Admin
 @app.route('/register/admin', methods=['GET'])
 def admin():
-    admin = User(email= 'purcea.ionut99@yahoo.com', password = 'ionut', role= 'General Manager')
+    admin = User(email= 'general_manager@example.com', password = 'insert password', role= 'General Manager')
     db.session.add(admin)
     db.session.commit()
     return 'Admin has been created'
