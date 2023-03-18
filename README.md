@@ -33,8 +33,8 @@ POST /login <br />
 
 ``` json
 {
-  "email": "purcea.ionut99@yahoo.com",
-  "password": "ionut"
+  "email": "general_manager@example.com",
+  "password": "password"
 }
 ```
 
