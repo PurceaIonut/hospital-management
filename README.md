@@ -24,7 +24,7 @@ To test the REST Api we can use different methods. My recommendation is Postman.
 
 ## Endpoints
 ### Register Route
-admin = User(email= 'purcea.ionut99@yahoo.com', password = 'ionut', role= 'General Manager'), we can change email and password from our app.py <br />
+admin = User(email= 'general_manager@example.com', password = 'password', role= 'General Manager'), we can change email and password from our app.py <br />
 <br />
 GET /register/admin
 
