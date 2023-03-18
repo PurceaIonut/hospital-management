@@ -9,9 +9,9 @@ The project is created with the help of the Flask framework along with some of i
 ## Getting Started
 To test the REST Api we can use different methods. My recommendation is Postman.
 
-1. Install Postman, create new collection, add HTTP request.
-2. In our file we have a route /register/admin, we can modify this according to the email and password we want to use for Login, with this we can further create other users depending on the role
-3. To create General Manager account in our database we use http://localhost:5000/register/admin with method 'GET' 
+1.Clone this repository: git clone https://github.com/PurceaIonut/hospital-management.git
+2.Navigate to the project directory: cd <repository-name>
+3.Install the required dependencies: pip install -r requirements.txt
 
 
 ### Dependencies
@@ -19,36 +19,132 @@ To test the REST Api we can use different methods. My recommendation is Postman.
 * Flask
 * Flask-JWT-Extended
 * Flask-SQLAlchemy
+* Flask-JWT-Extended
 
 
-## Executing program
-After taking the steps from Getting Started
+## Endpoints
+### Register Route
+admin = User(email= 'purcea.ionut99@yahoo.com', password = 'ionut', role= 'General Manager'), we can change email and password from our app.py <br />
+<br />
+GET /register/admin
 
-1. In our Postman select Body -> Raw ->Json. Connect to account with {"email" : "insert General Manager email", "password": "insert password"
-2. Login with our General Manager with http://localhost:5000/login ('POST' method).we will get an "access_token" which we put in the tab Authorization -> Type: Bearer Token -> Token. Now we are connected with the general manager role, we can use the following requests:<br />
--Doctor Management (Create new Doctor account, list all doctors, delete a doctor) <br />
--Patient management (Create new Patient account, list all patients, delete a patient, Patient assignment to a Assistant) <br />
--Assistant Management (Create new Assistant account, list all assistants, delete an assistant).<br /> 
--A report containing the list of all the Doctors and the associated patients and a
-section for statistics data (JSON). <br />
--A report with all the treatments applied to a Patient (JSON)<br />
+### Login Route
+POST /login <br />
 
-3. If we want to create a doctor/patient/assistant, we will do it in the following way: <br />
--http://localhost:5000/doctor with body : {"email" : "insert doctor email", "name" : "insert doctor name", "password": "insert doctor password"}, only General Manager account can create a new Doctor (method='POST') <br />
--http://localhost:5000/patient with body : {"email" : "insert patient email", "name" : "insert patient name", "password": "insert patient password"}Doctor and General Manager can create a new Patient(method='POST')<br />
--http://localhost:5000/assistant with body : {"email" : "insert assistant email", "name" : "insert assistant name", "password": "insert assistant password"}only General Manager account can create new Assistant (method='POST') <br />
-
-4.If we want to access a report containing the list of all the Doctors and the associated patients and a
-section for statistics we can with 
-
-
-
-## Help
-
-Any advise for common problems or issues.
+``` json
+{
+  "email": "purcea.ionut99@yahoo.com",
+  "password": "ionut"
+}
 ```
-command to run if program contains helper info
+
+### Doctors
+POST /doctor (requires authentication) - creates a new doctor <br />
+GET /doctors (requires authentication) - retrieves all doctors <br />
+DELETE /doctor/<id> (requires authentication) - deletes a doctor by ID <br />
+### Patients<br />
+POST /patient (requires authentication) - creates a new patient <br />
+GET /patients (requires authentication) - retrieves all patients <br />
+DELETE /patient/<id> (requires authentication) - deletes a patient by ID <br />
+### Assistants <br />
+POST /assistant (requires authentication) - creates a new assistant <br />
+GET /assistants (requires authentication) - retrieves all assistants <br />
+DELETE /assistant/<id> (requires authentication) - deletes an assistant by ID <br />
+### Authentication <br />
+This API uses JSON Web Tokens (JWT) for authentication. To access any of the endpoints that require authentication, you must include a valid JWT token in the Authorization header of your HTTP request.
+<br />
+
+### Doctor Treatment
+POST /treatment/patient/assign
+
+Assigns a treatment to a patient by a doctor.
+
+Request body:
+ 
+``` json
+{
+  "name": "Treatment name",
+  "description": "Description of treatment",
+  "patient_id": 123,
+  "doctor_id": 456
+}
 ```
+### Assign Patient
+POST /patient/{patient_name}/assign
+
+Assigns a patient to an assistant.
+
+Request body:
+
+``` json
+{
+   "assistant_id": 789
+}
+```
+
+### Assistant Treatment
+POST /treatment/patient/assign
+
+Assigns a treatment to a patient by an assistant.
+
+Request body:
+
+``` json
+{
+  "name": "Treatment name",
+  "description": "Description of treatment",
+  "patient_id": 123,
+  "assistant_id": 789
+}
+```
+
+### Report Doctors
+
+GET /report
+
+Returns a report containing the list of all the doctors and the associated patients.
+
+Response body:
+
+``` json
+{
+  "report": [
+    {
+      "doctor": "Doctor name",
+      "patients": [
+        {
+          "id": 123,
+          "name": "Patient name",
+          "email": "patient@email.com"
+        },
+      ]
+    },
+  ],
+  "statistics": {
+    "total_doctors": 5,
+    "total_patients": 20,
+    "total_treatments": 30
+  }
+}
+```
+
+### Get Patient Treatments
+GET /patient/{patient_name}/treatments
+
+Returns a report with all the treatments applied to a patient (JSON).
+
+Response body:
+``` json
+{
+  "name": "Treatment name",    
+  "description": "Description of treatment"
+}
+```
+## Vulnerabilities
+1. Passwords are stored as plain text in the database, which makes them vulnerable to attacks if the database is compromised. <br />
+2. The access token is not being verified for each request. <br />
+3. There is no session timeout or logout mechanism, which could allow an attacker to hijack an authenticated session if they gain access to the user's access token.
+
 
 ## Authors
 
