@@ -19,7 +19,6 @@ To test the REST Api we can use different methods. My recommendation is Postman.
 * Flask
 * Flask-JWT-Extended
 * Flask-SQLAlchemy
-* Flask-JWT-Extended
 
 
 ## Endpoints
